@@ -68,6 +68,7 @@ class MainActivity : GameActivity(), IMainView {
     private fun colToX(col: Int): Float = xOffset + col * standardSize
 
     override fun drawMaze() {
+
         for (row in 0 until mazeRows){
             for (col in 0 until mazeCols){
                 val cell = maze[row, col]

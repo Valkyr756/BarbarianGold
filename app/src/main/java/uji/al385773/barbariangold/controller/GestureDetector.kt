@@ -1,6 +1,6 @@
 package uji.al385773.barbariangold.controller
 
-import es.uji.jvilar.barbariangold.model.Direction
+import uji.al385773.barbariangold.model.Direction
 import kotlin.math.abs
 
 internal class GestureDetector {

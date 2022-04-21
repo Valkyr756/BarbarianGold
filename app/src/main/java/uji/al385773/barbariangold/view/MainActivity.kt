@@ -26,7 +26,7 @@ class MainActivity : GameActivity(), IMainView {
     private var width = 0
     private var height = 0
 
-    lateinit var graphics: Graphics
+    private lateinit var graphics: Graphics
     private val model = Model()
     private val maze
         get() = model.maze
@@ -34,7 +34,7 @@ class MainActivity : GameActivity(), IMainView {
         get() = maze.nRows
     private val mazeCols
         get() = maze.nCols
-    val controller = Controller(model, this)
+    private val controller = Controller(model, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,11 +61,11 @@ class MainActivity : GameActivity(), IMainView {
         return graphics.frameBuffer
     }
 
-    override fun buildGameController() = Controller(model, this)
+    override fun buildGameController() = controller
 
-    private fun rowToY(row: Int): Float = yOffset + row * standardSize
+    override fun rowToY(row: Int): Float = yOffset + row * standardSize
 
-    private fun colToX(col: Int): Float = xOffset + col * standardSize
+    override fun colToX(col: Int): Float = xOffset + col * standardSize
 
     override fun drawMaze() {
 
@@ -75,8 +75,10 @@ class MainActivity : GameActivity(), IMainView {
                 when(cell.type){
                     CellType.POTION -> graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/3, Color.GREEN)
                     CellType.GOLD -> graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/10, Color.YELLOW)
-                    CellType.DOOR -> graphics.drawRect(colToX(col), rowToY(row), standardSize, standardSize, Color.WHITE)
+                    CellType.DOOR -> graphics.drawRect(colToX(col), rowToY(row), standardSize, standardSize/4, Color.WHITE)
                     CellType.WALL -> graphics.drawRect(colToX(col), rowToY(row), standardSize, standardSize, Color.BLUE)
+                    CellType.ORIGIN -> graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/2.5f, Color.YELLOW)
+                    CellType.HOME -> graphics.drawRect(colToX(col) + standardSize/8, rowToY(row) + standardSize/8, standardSize/1.25f, standardSize/1.25f, Color.RED)
                 }
             }
         }

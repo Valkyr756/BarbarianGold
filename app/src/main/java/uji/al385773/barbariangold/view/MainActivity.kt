@@ -67,8 +67,15 @@ class MainActivity : GameActivity(), IMainView {
 
     override fun colToX(col: Int): Float = xOffset + col * standardSize
 
-    override fun drawMaze() {
+    override fun normalizeX(eventX: Int): Int {
+        return eventX/width
+    }
 
+    override fun normalizeY(eventY: Int): Int {
+        return eventY/height
+    }
+
+    override fun drawMaze() {
         for (row in 0 until mazeRows){
             for (col in 0 until mazeCols){
                 val cell = maze[row, col]
@@ -77,9 +84,9 @@ class MainActivity : GameActivity(), IMainView {
                     CellType.GOLD -> graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/10, Color.YELLOW)
                     CellType.DOOR -> graphics.drawRect(colToX(col), rowToY(row), standardSize, standardSize/4, Color.WHITE)
                     CellType.WALL -> graphics.drawRect(colToX(col), rowToY(row), standardSize, standardSize, Color.BLUE)
-                    CellType.ORIGIN -> graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/2.5f, Color.YELLOW)
+                    /*CellType.ORIGIN -> graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/2.5f, Color.YELLOW)
                     CellType.HOME -> graphics.drawRect(colToX(col) + standardSize/8, rowToY(row) + standardSize/8, standardSize/1.25f, standardSize/1.25f, Color.RED)
-                }
+                */}
             }
         }
     }

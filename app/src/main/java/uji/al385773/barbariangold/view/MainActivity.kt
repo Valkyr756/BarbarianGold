@@ -58,6 +58,7 @@ class MainActivity : GameActivity(), IMainView {
     override fun onDrawingRequested(): Bitmap {
         graphics.clear(BACKGROUND_COLOR)
         drawMaze()
+        drawPrincess()
         return graphics.frameBuffer
     }
 
@@ -67,12 +68,12 @@ class MainActivity : GameActivity(), IMainView {
 
     override fun colToX(col: Int): Float = xOffset + col * standardSize
 
-    override fun normalizeX(eventX: Int): Int {
-        return eventX/width
+    override fun normalizeX(eventX: Int): Float {
+        return eventX/width.toFloat()
     }
 
-    override fun normalizeY(eventY: Int): Int {
-        return eventY/height
+    override fun normalizeY(eventY: Int): Float {
+        return eventY/height.toFloat()
     }
 
     override fun drawMaze() {
@@ -89,5 +90,9 @@ class MainActivity : GameActivity(), IMainView {
                 */}
             }
         }
+    }
+
+    override fun drawPrincess() {
+        graphics.drawCircle(colToX(model.coorX.toInt()) + standardSize/2, rowToY(model.coorY.toInt()) + standardSize/2, standardSize/2.5f, Color.YELLOW)
     }
 }

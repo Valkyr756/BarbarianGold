@@ -64,4 +64,12 @@ class Princess(mazeOG: Maze) {
         coorX = position.col + 0.5f
         coorY = position.row + 0.5f
     }
+
+    fun reset() {
+        coins = 0
+        position = maze.origin
+        coorX = position.col + 0.5f
+        coorY = position.row + 0.5f
+        moving = false
+    }
 }

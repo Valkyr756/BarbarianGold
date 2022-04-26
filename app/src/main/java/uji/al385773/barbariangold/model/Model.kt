@@ -25,6 +25,14 @@ class Model {
 
         if(princess.coins == maze.gold){
             System.out.println("victoria")
+            maze.reset()
+            princess.reset()
+            for(monster in arrayMonsters){
+                monster.reset()
+            }
+
+
+
         }
     }
 

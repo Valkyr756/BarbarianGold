@@ -88,8 +88,7 @@ class MainActivity : GameActivity(), IMainView {
                     CellType.GOLD -> graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/10, Color.YELLOW)
                     CellType.DOOR -> graphics.drawRect(colToX(col), rowToY(row), standardSize, standardSize/4, Color.WHITE)
                     CellType.WALL -> graphics.drawRect(colToX(col), rowToY(row), standardSize, standardSize, Color.BLUE)
-                    //CellType.ORIGIN -> graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/2.5f, Color.YELLOW)
-                    CellType.HOME -> graphics.drawRect(colToX(col) + standardSize/8, rowToY(row) + standardSize/8, standardSize/1.25f, standardSize/1.25f, Color.RED)
+
                 }
             }
         }
@@ -100,8 +99,11 @@ class MainActivity : GameActivity(), IMainView {
     }
 
     override fun drawMonsters() {
+        val arrayColors = arrayOf(Color.CYAN, Color.RED, Color.MAGENTA, Color.WHITE)
+        var i : Int = 0
         for (monster in model.arrayMonsters){
-            graphics.drawRect(mazeXToScreenX(monster.coorX) - standardSize/2, mazeYToScreenY(monster.coorY) - standardSize/2, standardSize/1.25f, standardSize/1.25f, Color.CYAN)
+            graphics.drawRect(mazeXToScreenX(monster.coorX) - standardSize/2, mazeYToScreenY(monster.coorY) - standardSize/2, standardSize/1.25f, standardSize/1.25f, arrayColors[i])
+            i++
         }
     }
 }

@@ -3,39 +3,45 @@ package uji.al385773.barbariangold.model
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
-class Monster(mazeEO: Maze, nMonster: Int) {
-    var maze: Maze = mazeEO
+class Monster(var maze: Maze, nMonster: Int) {
     private val monsterSpeed: Float = 1.25f
     private var position: Position = maze.enemyOrigins[nMonster]
     var coorX = position.col + 0.5f
     var coorY = position.row + 0.5f
     var direction = Direction.UP
 
-    fun update(deltaTime: Float){
+    init {
+        direction = fixDirection(maze)
+    }
+    fun update(deltaTime: Float) {
         //if(moving) { SIEMPRE SE MUEVEN
-            coorX += monsterSpeed * deltaTime * direction.col
-            coorY += monsterSpeed * deltaTime * direction.row
+        coorX += monsterSpeed * deltaTime * direction.col
+        coorY += monsterSpeed * deltaTime * direction.row
 
-            /*val newPos = Position((coorY-0.5f).roundToInt(), (coorX-0.5f).roundToInt())
-            if(newPos != position){
-                if(maze[newPos].type == CellType.WALL){
-                    //IMAGINO QUE SERÁ CAMBIAR DIRECCIÓN A OTRA QUE NO TENGA PARED
-                    toCenter()
-                }
-                else{
-                    position = newPos
-                }
-            }*/
-       // }
-
-
-        if (!maze[position].hasWall(direction.turnRight()) || !maze[position].hasWall(direction.turnLeft())) {
-            val newDirection = fixDirection(maze)
-            if (direction != newDirection) {
+        val newPos = Position((coorY - 0.5f).roundToInt(), (coorX - 0.5f).roundToInt())
+        if (newPos != position) {
+            if (maze[newPos].type == CellType.WALL) {
                 toCenter()
-                direction = newDirection
+                direction = direction.opposite()
+
+            } else {
+                position = newPos
+                if (!maze[position].hasWall(direction.turnRight()) || !maze[position].hasWall(
+                        direction.turnLeft()
+                    )
+                ) {
+                    val newDirection = fixDirection(maze)
+                    if (direction != newDirection) {
+                        toCenter()
+                        direction = newDirection
+                    }
+                }
             }
         }
+
+        // }
+
+
     }
 
     private fun fixDirection(maze: Maze): Direction {
@@ -45,6 +51,7 @@ class Monster(mazeEO: Maze, nMonster: Int) {
             if(!maze[position].hasWall(possibleDirection) && possibleDirection != direction.opposite())
                 possible.add(possibleDirection)
         }
+        if(possible.isEmpty()) return direction.opposite()
         return possible.random()
 
         //Modo 1

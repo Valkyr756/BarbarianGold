@@ -1,5 +1,7 @@
 package uji.al385773.barbariangold.model
 
+import java.lang.Math.abs
+
 class Model {
 
     var maze: Maze = Levels.all[0]
@@ -21,7 +23,7 @@ class Model {
         princess.update(deltaTime)
         for (monster in arrayMonsters){
             monster.update(deltaTime)
-            if(((princess.coorX - monster.coorX)<0.4f) && ((princess.coorY - monster.coorY)<0.4f))
+            if((abs(princess.coorX - monster.coorX)<0.4f) && (abs(princess.coorY - monster.coorY) <0.4f))
             {
                 if(princess.hasPotion)
                 {

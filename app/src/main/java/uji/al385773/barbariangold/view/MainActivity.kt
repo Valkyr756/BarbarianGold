@@ -41,6 +41,8 @@ class MainActivity : GameActivity(), IMainView {
 
     //override fun getGameView(): GameView = findViewById(R.id.gameView)
 
+
+
     override fun onBitmapMeasuresAvailable(width: Int, height: Int) {
         this.width = width
         this.height = height

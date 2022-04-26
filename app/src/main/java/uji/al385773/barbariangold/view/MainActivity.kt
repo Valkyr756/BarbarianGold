@@ -4,10 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import es.uji.vj1229.framework.GameActivity
-import es.uji.vj1229.framework.GameView
 import es.uji.vj1229.framework.Graphics
-import es.uji.vj1229.framework.IGameController
-import uji.al385773.barbariangold.R
 import uji.al385773.barbariangold.controller.Controller
 import uji.al385773.barbariangold.model.CellType
 import uji.al385773.barbariangold.model.Model
@@ -59,6 +56,7 @@ class MainActivity : GameActivity(), IMainView {
         graphics.clear(BACKGROUND_COLOR)
         drawMaze()
         drawPrincess()
+
         return graphics.frameBuffer
     }
 
@@ -68,9 +66,9 @@ class MainActivity : GameActivity(), IMainView {
 
     private fun colToX(col: Int): Float = xOffset + col * standardSize
 
-    private fun wXToSX(coordX: Float):Float = xOffset + coordX * standardSize
+    private fun mazeXToScreenX(coordX: Float):Float = xOffset + coordX * standardSize
 
-    private fun wYToSY(coordY: Float):Float = yOffset + coordY * standardSize
+    private fun mazeYToScreenY(coordY: Float):Float = yOffset + coordY * standardSize
 
     override fun normalizeX(eventX: Int): Float {
         return eventX/width.toFloat()
@@ -97,6 +95,12 @@ class MainActivity : GameActivity(), IMainView {
     }
 
     override fun drawPrincess() {
-        graphics.drawCircle(wXToSX(model.princess.coorX), wYToSY(model.princess.coorY), standardSize/2.5f, Color.YELLOW)
+        graphics.drawCircle(mazeXToScreenX(model.princess.coorX), mazeYToScreenY(model.princess.coorY), standardSize/2.5f, Color.YELLOW)
+    }
+
+    override fun drawMonsters() {
+        for (monster in model.arrayMonsters){
+            graphics.drawRect(mazeXToScreenX(model.princess.coorX), mazeYToScreenY(model.princess.coorY), standardSize/1.25f, standardSize/1.25f, Color.CYAN)
+        }
     }
 }

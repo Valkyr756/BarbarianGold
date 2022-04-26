@@ -1,18 +1,27 @@
 package uji.al385773.barbariangold.model
 
-import uji.al385773.barbariangold.controller.GestureDetector
-import kotlin.math.roundToInt
-
 class Model {
 
     var maze: Maze = Levels.all[0]
         private set
-    var princess: Princess = Princess(maze.origin, maze)
+    var princess: Princess = Princess(maze)
+    val arrayMonsters: ArrayList<Monster> = fillArrayMonsters()
 
+
+    //Function to fill the array of monsters
+    private fun fillArrayMonsters(): ArrayList<Monster> {
+        val arrayAux = ArrayList<Monster>()
+        for (i in maze.enemyOrigins.indices){
+            arrayAux.add(Monster(maze, i))
+        }
+        return arrayAux
+    }
 
     fun update(deltaTime: Float) {
-        princess.updatePrincess(deltaTime)
-
+        princess.update(deltaTime)
+        for (monster in arrayMonsters){
+            monster.update(deltaTime)
+        }
     }
 
     fun changeDirection(direction: Direction) {

@@ -15,8 +15,10 @@ class Model {
 
     }
 
-
     fun changeDirection(direction: Direction) {
+        princess.changeDirection(direction)
+    }
+    /*fun changeDirection(direction: Direction) {
         if(!princess.moving){
             princess.direction = direction
             princess.moving = true
@@ -34,5 +36,5 @@ class Model {
         }
         princess.nextDirection = direction
 
-    }
+    }*/
 }

@@ -64,13 +64,13 @@ class MainActivity : GameActivity(), IMainView {
 
     override fun buildGameController() = controller
 
-    override fun rowToY(row: Int): Float = yOffset + row * standardSize
+    private fun rowToY(row: Int): Float = yOffset + row * standardSize
 
-    override fun colToX(col: Int): Float = xOffset + col * standardSize
+    private fun colToX(col: Int): Float = xOffset + col * standardSize
 
-    fun wXToSX(coordX:Float):Float = xOffset + coordX * standardSize
+    private fun wXToSX(coordX: Float):Float = xOffset + coordX * standardSize
 
-    fun wYToSY(coordY:Float):Float = yOffset + coordY * standardSize
+    private fun wYToSY(coordY: Float):Float = yOffset + coordY * standardSize
 
     override fun normalizeX(eventX: Int): Float {
         return eventX/width.toFloat()

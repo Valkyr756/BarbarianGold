@@ -22,6 +22,10 @@ class Model {
         for (monster in arrayMonsters){
             monster.update(deltaTime)
         }
+
+        if(princess.coins == maze.gold){
+            System.out.println("victoria")
+        }
     }
 
     fun changeDirection(direction: Direction) {

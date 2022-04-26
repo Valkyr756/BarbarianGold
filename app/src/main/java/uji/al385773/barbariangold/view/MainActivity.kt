@@ -85,7 +85,8 @@ class MainActivity : GameActivity(), IMainView {
                 val cell = maze[row, col]
                 when(cell.type){
                     CellType.POTION -> graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/3, Color.GREEN)
-                    CellType.GOLD -> graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/10, Color.YELLOW)
+                    CellType.GOLD -> if(!maze[row,col].used)
+                                        graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/10, Color.YELLOW)
                     CellType.DOOR -> graphics.drawRect(colToX(col), rowToY(row), standardSize, standardSize/4, Color.WHITE)
                     CellType.WALL -> graphics.drawRect(colToX(col), rowToY(row), standardSize, standardSize, Color.BLUE)
 

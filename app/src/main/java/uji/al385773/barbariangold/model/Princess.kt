@@ -11,6 +11,7 @@ class Princess(mazeOG: Maze) {
     var direction = Direction.UP
     var nextDirection = Direction.UP
     var moving = false
+    var coins : Int = 0
 
     fun update(deltaTime: Float){
         if(moving) {
@@ -19,6 +20,10 @@ class Princess(mazeOG: Maze) {
 
             val newPos = Position((coorY - 0.5f).roundToInt(), (coorX - 0.5f).roundToInt())
             if(newPos != position){
+                if(maze[newPos].type == CellType.GOLD && !maze[newPos].used ){
+                    maze[newPos].used = true
+                    coins++
+                }
                 if(maze[newPos].type == CellType.DOOR || maze[newPos].type == CellType.WALL){
                     moving = false
                     toCenter()

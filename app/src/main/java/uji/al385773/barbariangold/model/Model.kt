@@ -10,10 +10,20 @@ class Model {
     var princessPos: Position = maze.origin
     var coorX = princessPos.col + 0.5f
     var coorY = princessPos.row + 0.5f
-    private val direction = GestureDetector().direction
+    private var direction = GestureDetector().direction
 
-    fun update(deltaTime: Float) {
+    fun update(deltaTime: Float, nextDirection: Direction) {
         coorX += princessSpeed * deltaTime * direction.col
         coorY += princessSpeed * deltaTime * direction.row
+
+        /*if (direction != nextDirection && !maze[princessPos].hasWall(nextDirection) && maze[princessPos.translate(nextDirection) != CellType.DOOR) {
+            toCenter()
+            direction = nextDirection
+        }*/
+    }
+
+    fun toCenter() {
+        coorX = princessPos.col + 0.5f
+        coorY = princessPos.row + 0.5f
     }
 }

@@ -24,6 +24,11 @@ class Princess(mazeOG: Maze) {
                     maze[newPos].used = true
                     coins++
                 }
+                else if(maze[newPos].type == CellType.POTION && !maze[newPos].used){
+                    maze[newPos].used = true
+                    //IMAGINO QUE AQUÍ SERÍA ACTIVAR EL ESTADO DE INVINCIBILITY O LO QUE SEA
+                }
+
                 if(maze[newPos].type == CellType.DOOR || maze[newPos].type == CellType.WALL){
                     moving = false
                     toCenter()

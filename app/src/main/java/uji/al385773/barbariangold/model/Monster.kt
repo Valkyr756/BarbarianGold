@@ -14,7 +14,7 @@ class Monster(var maze: Maze, var nMonster: Int) {
         direction = fixDirection(maze)
     }
     fun update(deltaTime: Float) {
-        //if(moving) { SIEMPRE SE MUEVEN
+
         coorX += monsterSpeed * deltaTime * direction.col
         coorY += monsterSpeed * deltaTime * direction.row
 
@@ -39,7 +39,8 @@ class Monster(var maze: Maze, var nMonster: Int) {
             }
         }
 
-        // }
+
+
 
 
     }

@@ -15,6 +15,8 @@ class Princess(mazeOG: Maze) {
     var lives = 3
     var hasPotion : Boolean = false
     var invencibilityTime : Float = 0f
+    var dead : Boolean = false
+    var deadTime : Float = 0f
 
     fun update(deltaTime: Float){
         if(moving) {
@@ -57,6 +59,15 @@ class Princess(mazeOG: Maze) {
                 invencibilityTime = 0f
             }
         }
+
+        if(dead){
+            deadTime++
+            if(deadTime>30f)
+            {
+                dead = false
+                deadTime = 0f
+            }
+        }
     }
 
     fun changeDirection(direction: Direction) {
@@ -90,5 +101,18 @@ class Princess(mazeOG: Maze) {
         coorX = position.col + 0.5f
         coorY = position.row + 0.5f
         moving = false
+        hasPotion = false
+        lives = 3
+        dead = false
+    }
+
+    fun death() {
+        position = maze.origin
+        coorX = position.col + 0.5f
+        coorY = position.row + 0.5f
+        moving = false
+        hasPotion = false
+        lives = lives - 1
+        dead = true
     }
 }

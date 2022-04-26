@@ -21,7 +21,34 @@ class Model {
         princess.update(deltaTime)
         for (monster in arrayMonsters){
             monster.update(deltaTime)
+            if(((princess.coorX - monster.coorX)<0.4f) && ((princess.coorY - monster.coorY)<0.4f))
+            {
+                if(princess.hasPotion)
+                {
+                    System.out.println("monster killed")
+                    monster.reset()
+                }
+                else {
+                    if(princess.lives <= 1) {
+                        System.out.println("game over")
+                        maze.reset()
+                        for(monster in arrayMonsters){
+                            monster.reset()
+                        }
+                        princess.reset()
+                    }
+                    else {
+                        //a lo mejor se necesita un segundo donde no puedas volver a perder vida
+                        princess.death()
+
+                        System.out.println("death, "+princess.lives+ " lives left")
+                    }
+
+                }
+            }
         }
+
+
 
         if(princess.coins == maze.gold){
             System.out.println("victoria")

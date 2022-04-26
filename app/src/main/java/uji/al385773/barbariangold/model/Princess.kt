@@ -12,6 +12,9 @@ class Princess(mazeOG: Maze) {
     var nextDirection = Direction.UP
     var moving = false
     var coins : Int = 0
+    var lives = 3
+    var hasPotion : Boolean = false
+    var invencibilityTime : Float = 0f
 
     fun update(deltaTime: Float){
         if(moving) {
@@ -26,7 +29,8 @@ class Princess(mazeOG: Maze) {
                 }
                 else if(maze[newPos].type == CellType.POTION && !maze[newPos].used){
                     maze[newPos].used = true
-                    //IMAGINO QUE AQUÍ SERÍA ACTIVAR EL ESTADO DE INVINCIBILITY O LO QUE SEA
+                    hasPotion = true
+                    //luego que los monstruos al colisionar o lo que sea comprueben si la princesa tiene la pocion
                 }
 
                 if(maze[newPos].type == CellType.DOOR || maze[newPos].type == CellType.WALL){
@@ -42,6 +46,16 @@ class Princess(mazeOG: Maze) {
             toCenter()
             direction = nextDirection
             moving = true
+        }
+
+        //Comprueba si tienes la poción y si la tienes aumenta la var invencibilityTime y si ve que ha pasado
+        //suficiente tiempo te quita ya el estado de invencibilidad (pone hasPotion a falso otra vez)
+        if(hasPotion) {
+            invencibilityTime++
+            if(invencibilityTime>140f){
+                hasPotion = false
+                invencibilityTime = 0f
+            }
         }
     }
 

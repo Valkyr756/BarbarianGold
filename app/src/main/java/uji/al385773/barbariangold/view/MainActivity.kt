@@ -97,7 +97,8 @@ class MainActivity : GameActivity(), IMainView {
     }
 
     override fun drawPrincess() {
-        graphics.drawCircle(mazeXToScreenX(model.princess.coorX), mazeYToScreenY(model.princess.coorY), standardSize/2.5f, Color.YELLOW)
+        if(!model.princess.hasPotion) graphics.drawCircle(mazeXToScreenX(model.princess.coorX), mazeYToScreenY(model.princess.coorY), standardSize/2.5f, Color.YELLOW)
+        else graphics.drawCircle(mazeXToScreenX(model.princess.coorX), mazeYToScreenY(model.princess.coorY), standardSize/2.5f, Color.BLUE)
     }
 
     override fun drawMonsters() {

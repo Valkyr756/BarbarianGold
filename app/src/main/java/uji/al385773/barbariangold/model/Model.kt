@@ -1,29 +1,38 @@
 package uji.al385773.barbariangold.model
 
 import uji.al385773.barbariangold.controller.GestureDetector
+import kotlin.math.roundToInt
 
 class Model {
 
     var maze: Maze = Levels.all[0]
         private set
-    private val princessSpeed: Float = 1f
-    var princessPos: Position = maze.origin
-    var coorX = princessPos.col + 0.5f
-    var coorY = princessPos.row + 0.5f
-    private var direction = GestureDetector().direction
+    var princess: Princess = Princess(maze.origin, maze)
 
-    fun update(deltaTime: Float, nextDirection: Direction) {
-        coorX += princessSpeed * deltaTime * direction.col
-        coorY += princessSpeed * deltaTime * direction.row
 
-        /*if (direction != nextDirection && !maze[princessPos].hasWall(nextDirection) && maze[princessPos.translate(nextDirection) != CellType.DOOR) {
-            toCenter()
-            direction = nextDirection
-        }*/
+    fun update(deltaTime: Float) {
+        princess.updatePrincess(deltaTime)
+
     }
 
-    fun toCenter() {
-        coorX = princessPos.col + 0.5f
-        coorY = princessPos.row + 0.5f
+
+    fun changeDirection(direction: Direction) {
+        if(!princess.moving){
+            princess.direction = direction
+            princess.moving = true
+        }
+        else{
+            if(direction != princess.direction){
+                if(direction == princess.direction.opposite()){princess.direction = direction}
+                else{
+                    if(!maze[princess.princessPos].hasWall(direction)){
+                        princess.toCenter()
+                        princess.direction = direction
+                    }
+                }
+            }
+        }
+        princess.nextDirection = direction
+
     }
 }

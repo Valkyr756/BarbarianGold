@@ -68,6 +68,10 @@ class MainActivity : GameActivity(), IMainView {
 
     override fun colToX(col: Int): Float = xOffset + col * standardSize
 
+    fun wXToSX(coordX:Float):Float = xOffset + coordX * standardSize
+
+    fun wYToSY(coordY:Float):Float = yOffset + coordY * standardSize
+
     override fun normalizeX(eventX: Int): Float {
         return eventX/width.toFloat()
     }
@@ -93,6 +97,6 @@ class MainActivity : GameActivity(), IMainView {
     }
 
     override fun drawPrincess() {
-        graphics.drawCircle(colToX(model.coorX.toInt()) + standardSize/2, rowToY(model.coorY.toInt()) + standardSize/2, standardSize/2.5f, Color.YELLOW)
+        graphics.drawCircle(wXToSX(model.princess.coorX), wYToSY(model.princess.coorY), standardSize/2.5f, Color.YELLOW)
     }
 }

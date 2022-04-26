@@ -7,19 +7,17 @@ import uji.al385773.barbariangold.model.Model
 import uji.al385773.barbariangold.view.IMainView
 
 class Controller(private val model: Model, private val view: IMainView): IGameController {
+    private val gestureDetector = GestureDetector()
 
     override fun onUpdate(deltaTime: Float, touchEvents: MutableList<TouchHandler.TouchEvent>) {
-
-        val gestureDetector = GestureDetector()
-        var direction = gestureDetector.direction
-
+        val dTime = if(deltaTime>0.5)  0.02f else deltaTime
         for (event in touchEvents) {
             if (event.type == TouchHandler.TouchType.TOUCH_DOWN)
                 gestureDetector.onTouchDown(view.normalizeX(event.x), view.normalizeY(event.y))
             if (event.type == TouchHandler.TouchType.TOUCH_UP)
                 if (gestureDetector.onTouchUp(view.normalizeX(event.x), view.normalizeY(event.y)) == GestureDetector.Gestures.SWIPE)
-                    direction = gestureDetector.direction
+                    model.changeDirection(gestureDetector.direction)
         }
-        model.update(deltaTime, direction)
+        model.update(dTime)
     }
 }

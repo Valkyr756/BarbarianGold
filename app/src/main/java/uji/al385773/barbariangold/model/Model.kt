@@ -1,6 +1,5 @@
 package uji.al385773.barbariangold.model
 
-import uji.al385773.barbariangold.view.MainActivity
 import java.lang.Math.abs
 
 class Model {
@@ -10,6 +9,7 @@ class Model {
         private set
     var princess: Princess = Princess(maze)
     var arrayMonsters: ArrayList<Monster> = fillArrayMonsters()
+    var mazeChanged:Boolean = false
 
 
     //Function to fill the array of monsters
@@ -41,9 +41,12 @@ class Model {
                         }
                         princess.reset()
                     }
-                    else {
+                    else if(!princess.isDead) {
                         //a lo mejor se necesita un segundo donde no puedas volver a perder vida
                         princess.death()
+                        for(monster in arrayMonsters){
+                            monster.reset()
+                        }
 
                         System.out.println("death, "+princess.lives+ " lives left")
                     }
@@ -56,25 +59,23 @@ class Model {
 
         if(princess.coins == maze.gold){
             System.out.println("victoria")
+
             if(Levels.all.size-1 >= level+1){
+                mazeChanged = true
                 level = level + 1
                 maze = Levels.all[level]
                 princess = Princess(maze)
-                maze.reset()
-                princess.reset()
                 arrayMonsters = fillArrayMonsters()
-                for(monster in arrayMonsters){
-                    monster.reset()
-                }
+
             }
-            else {
+
                 System.out.println("no hay más niveles")
                 maze.reset()
                 princess.reset()
                 for(monster in arrayMonsters){
                     monster.reset()
                 }
-            }
+
 
 
 

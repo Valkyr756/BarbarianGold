@@ -6,4 +6,5 @@ interface IMainView {
     fun drawMonsters()
     fun normalizeX(eventX: Int): Float
     fun normalizeY(eventY: Int): Float
+    fun standardSizeCalculate()
 }

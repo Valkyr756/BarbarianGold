@@ -15,7 +15,7 @@ class Princess(mazeOG: Maze) {
     var lives = 3
     var hasPotion : Boolean = false
     var invencibilityTime : Float = 0f
-    var dead : Boolean = false
+    var isDead: Boolean = false
     var deadTime : Float = 0f
 
     fun update(deltaTime: Float){
@@ -32,6 +32,7 @@ class Princess(mazeOG: Maze) {
                 else if(maze[newPos].type == CellType.POTION && !maze[newPos].used){
                     maze[newPos].used = true
                     hasPotion = true
+                    invencibilityTime = 5f
                     //luego que los monstruos al colisionar o lo que sea comprueben si la princesa tiene la pocion
                 }
 
@@ -53,19 +54,17 @@ class Princess(mazeOG: Maze) {
         //Comprueba si tienes la poción y si la tienes aumenta la var invencibilityTime y si ve que ha pasado
         //suficiente tiempo te quita ya el estado de invencibilidad (pone hasPotion a falso otra vez)
         if(hasPotion) {
-            invencibilityTime++
-            if(invencibilityTime>140f){
+            invencibilityTime-=deltaTime
+            if(invencibilityTime<=0f){
                 hasPotion = false
-                invencibilityTime = 0f
             }
         }
 
-        if(dead){
-            deadTime++
-            if(deadTime>30f)
+        if(isDead){
+            deadTime-=deltaTime
+            if(deadTime<=0)
             {
-                dead = false
-                deadTime = 0f
+                isDead = false
             }
         }
     }
@@ -103,7 +102,7 @@ class Princess(mazeOG: Maze) {
         moving = false
         hasPotion = false
         lives = 3
-        dead = false
+        isDead = false
     }
 
     fun death() {
@@ -113,6 +112,8 @@ class Princess(mazeOG: Maze) {
         moving = false
         hasPotion = false
         lives = lives - 1
-        dead = true
+        isDead = true
+        deadTime = 1f
+
     }
 }

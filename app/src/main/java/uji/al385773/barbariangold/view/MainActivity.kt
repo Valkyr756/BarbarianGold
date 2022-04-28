@@ -47,12 +47,17 @@ class MainActivity : GameActivity(), IMainView {
         this.width = width
         this.height = height
 
-        standardSize = min((this.width/mazeCols), (this.height/mazeRows)).toFloat()
-        xOffset = (this.width - mazeCols * standardSize)/2
-        yOffset = (this.height - mazeRows * standardSize)/2
+        standardSizeCalculate()
+    }
+
+    override fun standardSizeCalculate() {
+        standardSize = min((this.width / mazeCols), (this.height / mazeRows)).toFloat()
+        xOffset = (this.width - mazeCols * standardSize) / 2
+        yOffset = (this.height - mazeRows * standardSize) / 2
 
         graphics = Graphics(width, height)
     }
+
 
     override fun onDrawingRequested(): Bitmap {
         graphics.clear(BACKGROUND_COLOR)

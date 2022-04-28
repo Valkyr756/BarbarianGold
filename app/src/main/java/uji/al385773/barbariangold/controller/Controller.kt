@@ -19,5 +19,10 @@ class Controller(private val model: Model, private val view: IMainView): IGameCo
                     model.changeDirection(gestureDetector.direction)
         }
         model.update(dTime)
+        if(model.mazeChanged) {
+            view.standardSizeCalculate()
+            model.mazeChanged = false
+        }
+
     }
 }

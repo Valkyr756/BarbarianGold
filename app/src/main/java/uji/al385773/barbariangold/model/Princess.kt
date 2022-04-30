@@ -2,7 +2,16 @@ package uji.al385773.barbariangold.model
 
 import kotlin.math.roundToInt
 
-class Princess(mazeOG: Maze) {
+class Princess(mazeOG: Maze, private val soundPlayer: PrincessSoundPlayer) {
+    interface PrincessSoundPlayer {
+        fun playCoin()
+        fun playPotion()
+        fun playWalk()
+        fun stopWalk()
+        fun deathPlay()
+        fun gameOverPlay()
+    }
+
     var maze: Maze = mazeOG
     private val princessSpeed: Float = 2f
     var position = maze.origin
@@ -28,16 +37,19 @@ class Princess(mazeOG: Maze) {
                 if(maze[newPos].type == CellType.GOLD && !maze[newPos].used ){
                     maze[newPos].used = true
                     coins++
+                    soundPlayer.playCoin()
                 }
                 else if(maze[newPos].type == CellType.POTION && !maze[newPos].used){
                     maze[newPos].used = true
                     hasPotion = true
                     invencibilityTime = 5f
+                    soundPlayer.playPotion()
                     //luego que los monstruos al colisionar o lo que sea comprueben si la princesa tiene la pocion
                 }
 
                 if(maze[newPos].type == CellType.DOOR || maze[newPos].type == CellType.WALL){
                     moving = false
+                    soundPlayer.stopWalk()
                     toCenter()
                 }
                 else{
@@ -49,6 +61,7 @@ class Princess(mazeOG: Maze) {
             toCenter()
             direction = nextDirection
             moving = true
+            soundPlayer.playWalk()
         }
 
         //Comprueba si tienes la poción y si la tienes aumenta la var invencibilityTime y si ve que ha pasado
@@ -73,6 +86,7 @@ class Princess(mazeOG: Maze) {
         if(!moving){
             this.direction = direction
             moving = true
+            soundPlayer.playWalk()
         }
         else{
             if(direction != this.direction){
@@ -100,6 +114,7 @@ class Princess(mazeOG: Maze) {
         coorX = position.col + 0.5f
         coorY = position.row + 0.5f
         moving = false
+        soundPlayer.stopWalk()
         hasPotion = false
         lives = 3
         isDead = false
@@ -110,10 +125,15 @@ class Princess(mazeOG: Maze) {
         coorX = position.col + 0.5f
         coorY = position.row + 0.5f
         moving = false
+        soundPlayer.stopWalk()
         hasPotion = false
         lives = lives - 1
         isDead = true
         deadTime = 1f
+        soundPlayer.deathPlay()
+    }
 
+    fun levelPassedSound() {
+        soundPlayer.gameOverPlay()  //
     }
 }

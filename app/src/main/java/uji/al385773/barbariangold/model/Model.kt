@@ -2,12 +2,12 @@ package uji.al385773.barbariangold.model
 
 import java.lang.Math.abs
 
-class Model {
+class Model(private var soundPlayer: Princess.PrincessSoundPlayer) {
 
     var level = 0
     var maze: Maze = Levels.all[level]
         private set
-    var princess: Princess = Princess(maze)
+    var princess: Princess = Princess(maze, soundPlayer)
     var arrayMonsters: ArrayList<Monster> = fillArrayMonsters()
     var mazeChanged:Boolean = false
 
@@ -59,12 +59,12 @@ class Model {
 
         if(princess.coins == maze.gold){
             System.out.println("victoria")
-
+            princess.levelPassedSound()
             if(Levels.all.size-1 >= level+1){
                 mazeChanged = true
                 level = level + 1
                 maze = Levels.all[level]
-                princess = Princess(maze)
+                princess = Princess(maze, soundPlayer)
                 arrayMonsters = fillArrayMonsters()
 
             }

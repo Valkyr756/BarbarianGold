@@ -26,10 +26,7 @@ class Monster(var maze: Maze, var nMonster: Int) {
 
             } else {
                 position = newPos
-                if (!maze[position].hasWall(direction.turnRight()) || !maze[position].hasWall(
-                        direction.turnLeft()
-                    )
-                ) {
+                if (!maze[position].hasWall(direction.turnRight()) || !maze[position].hasWall(direction.turnLeft())) {
                     val newDirection = fixDirection(maze)
                     if (direction != newDirection) {
                         toCenter()

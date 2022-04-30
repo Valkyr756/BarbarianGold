@@ -1,16 +1,21 @@
 package uji.al385773.barbariangold.view
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.media.AudioAttributes
+import android.media.SoundPool
 import android.os.Bundle
 import es.uji.vj1229.framework.GameActivity
 import es.uji.vj1229.framework.Graphics
+import uji.al385773.barbariangold.R
 import uji.al385773.barbariangold.controller.Controller
 import uji.al385773.barbariangold.model.CellType
 import uji.al385773.barbariangold.model.Model
+import uji.al385773.barbariangold.model.Princess
 import kotlin.math.min
 
-class MainActivity : GameActivity(), IMainView {
+class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
 
     companion object {
         private const val BACKGROUND_COLOR = Color.GRAY
@@ -24,7 +29,14 @@ class MainActivity : GameActivity(), IMainView {
     private var height = 0
 
     private lateinit var graphics: Graphics
-    private val model = Model()
+    private lateinit var soundPool: SoundPool
+    private var walkingId = 0
+    private var potionDrinkId = 0
+    private var coinTakenId = 0
+    private var levelFinishedId = 0
+    private var princessDiesId = 0
+
+    private val model = Model(this)
     private val maze
         get() = model.maze
     private val mazeRows
@@ -36,7 +48,24 @@ class MainActivity : GameActivity(), IMainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         landscapeFullScreenOnCreate()
+        prepareSoundPool(this)
+    }
 
+    private fun prepareSoundPool(context: Context) {
+        val attributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+        soundPool = SoundPool.Builder()
+            .setMaxStreams(3)
+            .setAudioAttributes(attributes)
+            .build()
+
+        walkingId = soundPool.load(context, R.raw.walking_princess, 0)
+        potionDrinkId = soundPool.load(context, R.raw.potion_taken, 0)
+        coinTakenId = soundPool.load(context, R.raw.coin_sound, 0)
+        levelFinishedId = soundPool.load(context, R.raw.game_over, 0)
+        princessDiesId = soundPool.load(context, R.raw.princess_death, 0)
     }
 
     //override fun getGameView(): GameView = findViewById(R.id.gameView)
@@ -115,5 +144,29 @@ class MainActivity : GameActivity(), IMainView {
             graphics.drawRect(mazeXToScreenX(monster.coorX) - standardSize/2, mazeYToScreenY(monster.coorY) - standardSize/2, standardSize/1.25f, standardSize/1.25f, arrayColors[i])
             i++
         }
+    }
+
+    override fun playCoin() {
+        soundPool.play(coinTakenId, 0.6f, 0.8f, 0, 0, 1f)
+    }
+
+    override fun playPotion() {
+        soundPool.play(potionDrinkId, 0.6f, 0.8f, 0, 0, 1f)
+    }
+
+    override fun playWalk() {
+        //soundPool.play(walkingId, 0.6f, 0.8f, 0, -1, 1f)
+    }
+
+    override fun stopWalk() {
+        //soundPool.stop(walkingId)
+    }
+
+    override fun deathPlay() {
+        soundPool.play(princessDiesId, 0.6f, 0.8f, 0, 0, 1f)
+    }
+
+    override fun gameOverPlay() {
+        soundPool.play(levelFinishedId, 0.6f, 0.8f, 0, 0, 1f)
     }
 }

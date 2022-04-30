@@ -20,26 +20,25 @@ class Princess(mazeOG: Maze, private val soundPlayer: PrincessSoundPlayer) {
     var direction = Direction.UP
     var nextDirection = Direction.UP
     var moving = false
-    var coins : Int = 0
+    var coins: Int = 0
     var lives = 3
-    var hasPotion : Boolean = false
-    var invencibilityTime : Float = 0f
+    var hasPotion: Boolean = false
+    var invencibilityTime: Float = 0f
     var isDead: Boolean = false
-    var deadTime : Float = 0f
+    var deadTime: Float = 0f
 
-    fun update(deltaTime: Float){
-        if(moving) {
+    fun update(deltaTime: Float) {
+        if (moving) {
             coorX += princessSpeed * deltaTime * direction.col
             coorY += princessSpeed * deltaTime * direction.row
 
             val newPos = Position((coorY - 0.5f).roundToInt(), (coorX - 0.5f).roundToInt())
-            if(newPos != position){
-                if(maze[newPos].type == CellType.GOLD && !maze[newPos].used ){
+            if (newPos != position) {
+                if (maze[newPos].type == CellType.GOLD && !maze[newPos].used) {
                     maze[newPos].used = true
                     coins++
                     soundPlayer.playCoin()
-                }
-                else if(maze[newPos].type == CellType.POTION && !maze[newPos].used){
+                } else if (maze[newPos].type == CellType.POTION && !maze[newPos].used) {
                     maze[newPos].used = true
                     hasPotion = true
                     invencibilityTime = 5f
@@ -47,17 +46,19 @@ class Princess(mazeOG: Maze, private val soundPlayer: PrincessSoundPlayer) {
                     //luego que los monstruos al colisionar o lo que sea comprueben si la princesa tiene la pocion
                 }
 
-                if(maze[newPos].type == CellType.DOOR || maze[newPos].type == CellType.WALL){
+                if (maze[newPos].type == CellType.DOOR || maze[newPos].type == CellType.WALL) {
                     moving = false
                     soundPlayer.stopWalk()
                     toCenter()
-                }
-                else{
+                } else {
                     position = newPos
                 }
             }
         }
-        if (direction != nextDirection && !maze[position].hasWall(nextDirection) && maze[position.translate(nextDirection)].type != CellType.DOOR) {
+        if (direction != nextDirection && !maze[position].hasWall(nextDirection) && maze[position.translate(
+                nextDirection
+            )].type != CellType.DOOR
+        ) {
             toCenter()
             direction = nextDirection
             moving = true
@@ -66,34 +67,32 @@ class Princess(mazeOG: Maze, private val soundPlayer: PrincessSoundPlayer) {
 
         //Comprueba si tienes la poción y si la tienes aumenta la var invencibilityTime y si ve que ha pasado
         //suficiente tiempo te quita ya el estado de invencibilidad (pone hasPotion a falso otra vez)
-        if(hasPotion) {
-            invencibilityTime-=deltaTime
-            if(invencibilityTime<=0f){
+        if (hasPotion) {
+            invencibilityTime -= deltaTime
+            if (invencibilityTime <= 0f) {
                 hasPotion = false
             }
         }
 
-        if(isDead){
-            deadTime-=deltaTime
-            if(deadTime<=0)
-            {
+        if (isDead) {
+            deadTime -= deltaTime
+            if (deadTime <= 0) {
                 isDead = false
             }
         }
     }
 
     fun changeDirection(direction: Direction) {
-        if(!moving){
+        if (!moving) {
             this.direction = direction
             moving = true
             soundPlayer.playWalk()
-        }
-        else{
-            if(direction != this.direction){
-                if(direction == this.direction.opposite())
+        } else {
+            if (direction != this.direction) {
+                if (direction == this.direction.opposite())
                     this.direction = direction
-                else{
-                    if(!maze[position].hasWall(direction)){
+                else {
+                    if (!maze[position].hasWall(direction)) {
                         toCenter()
                         this.direction = direction
                     }

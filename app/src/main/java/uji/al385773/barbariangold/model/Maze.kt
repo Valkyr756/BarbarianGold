@@ -13,7 +13,7 @@ enum class CellType {
 /**
  * A data class for representing the cells of the [Maze].
  */
-data class Cell (val type: CellType, var used: Boolean, val walls: Int) {
+data class Cell(val type: CellType, var used: Boolean, val walls: Int) {
     /**
      * Check whether there is a wall in the given [direction].
      *
@@ -113,7 +113,8 @@ class Maze(diagram: Array<String>) {
                 if (row > 0 && previous[col] == WALL) walls = walls.setWall(Direction.UP)
                 if (row < nRows - 1 && next[col] == WALL) walls = walls.setWall(Direction.DOWN)
                 if (col > 0 && current[col - 1] == WALL) walls = walls.setWall(Direction.LEFT)
-                if (col < nCols - 1 && current[col + 1] == WALL) walls = walls.setWall(Direction.RIGHT)
+                if (col < nCols - 1 && current[col + 1] == WALL) walls =
+                    walls.setWall(Direction.RIGHT)
 
                 cells[row][col] = Cell(
                     when (current[col]) {
@@ -213,7 +214,7 @@ class Maze(diagram: Array<String>) {
         /**
          * The [char] used for representing the walls.
          */
-        const val WALL= '#'
+        const val WALL = '#'
 
         /**
          * The [char] used for representing the home places for enemies.

@@ -13,6 +13,7 @@ class Monster(var maze: Maze, var nMonster: Int) {
     init {
         direction = fixDirection(maze)
     }
+
     fun update(deltaTime: Float) {
 
         coorX += monsterSpeed * deltaTime * direction.col
@@ -26,7 +27,10 @@ class Monster(var maze: Maze, var nMonster: Int) {
 
             } else {
                 position = newPos
-                if (!maze[position].hasWall(direction.turnRight()) || !maze[position].hasWall(direction.turnLeft())) {
+                if (!maze[position].hasWall(direction.turnRight()) || !maze[position].hasWall(
+                        direction.turnLeft()
+                    )
+                ) {
                     val newDirection = fixDirection(maze)
                     if (direction != newDirection) {
                         toCenter()
@@ -37,19 +41,16 @@ class Monster(var maze: Maze, var nMonster: Int) {
         }
 
 
-
-
-
     }
 
     private fun fixDirection(maze: Maze): Direction {
 
         val possible = ArrayList<Direction>()
-        for (possibleDirection in Direction.values()){
-            if(!maze[position].hasWall(possibleDirection) && possibleDirection != direction.opposite())
+        for (possibleDirection in Direction.values()) {
+            if (!maze[position].hasWall(possibleDirection) && possibleDirection != direction.opposite())
                 possible.add(possibleDirection)
         }
-        if(possible.isEmpty()) return direction.opposite()
+        if (possible.isEmpty()) return direction.opposite()
         return possible.random()
 
         //Modo 1

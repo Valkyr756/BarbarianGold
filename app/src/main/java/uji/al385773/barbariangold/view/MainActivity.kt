@@ -71,7 +71,6 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
     //override fun getGameView(): GameView = findViewById(R.id.gameView)
 
 
-
     override fun onBitmapMeasuresAvailable(width: Int, height: Int) {
         this.width = width
         this.height = height
@@ -103,29 +102,51 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
 
     private fun colToX(col: Int): Float = xOffset + col * standardSize
 
-    private fun mazeXToScreenX(coordX: Float):Float = xOffset + coordX * standardSize
+    private fun mazeXToScreenX(coordX: Float): Float = xOffset + coordX * standardSize
 
-    private fun mazeYToScreenY(coordY: Float):Float = yOffset + coordY * standardSize
+    private fun mazeYToScreenY(coordY: Float): Float = yOffset + coordY * standardSize
 
     override fun normalizeX(eventX: Int): Float {
-        return eventX/width.toFloat()
+        return eventX / width.toFloat()
     }
 
     override fun normalizeY(eventY: Int): Float {
-        return eventY/height.toFloat()
+        return eventY / height.toFloat()
     }
 
     override fun drawMaze() {
-        for (row in 0 until mazeRows){
-            for (col in 0 until mazeCols){
+        for (row in 0 until mazeRows) {
+            for (col in 0 until mazeCols) {
                 val cell = maze[row, col]
-                when(cell.type){
-                    CellType.POTION -> if(!maze[row,col].used)
-                        graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/3, Color.GREEN)
-                    CellType.GOLD -> if(!maze[row,col].used)
-                                        graphics.drawCircle(colToX(col) + standardSize/2, rowToY(row) + standardSize/2, standardSize/10, Color.YELLOW)
-                    CellType.DOOR -> graphics.drawRect(colToX(col), rowToY(row), standardSize, standardSize/4, Color.WHITE)
-                    CellType.WALL -> graphics.drawRect(colToX(col), rowToY(row), standardSize, standardSize, Color.BLUE)
+                when (cell.type) {
+                    CellType.POTION -> if (!maze[row, col].used)
+                        graphics.drawCircle(
+                            colToX(col) + standardSize / 2,
+                            rowToY(row) + standardSize / 2,
+                            standardSize / 3,
+                            Color.GREEN
+                        )
+                    CellType.GOLD -> if (!maze[row, col].used)
+                        graphics.drawCircle(
+                            colToX(col) + standardSize / 2,
+                            rowToY(row) + standardSize / 2,
+                            standardSize / 10,
+                            Color.YELLOW
+                        )
+                    CellType.DOOR -> graphics.drawRect(
+                        colToX(col),
+                        rowToY(row),
+                        standardSize,
+                        standardSize / 4,
+                        Color.WHITE
+                    )
+                    CellType.WALL -> graphics.drawRect(
+                        colToX(col),
+                        rowToY(row),
+                        standardSize,
+                        standardSize,
+                        Color.BLUE
+                    )
 
                 }
             }
@@ -133,15 +154,31 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
     }
 
     override fun drawPrincess() {
-        if(!model.princess.hasPotion) graphics.drawCircle(mazeXToScreenX(model.princess.coorX), mazeYToScreenY(model.princess.coorY), standardSize/2.5f, Color.YELLOW)
-        else graphics.drawCircle(mazeXToScreenX(model.princess.coorX), mazeYToScreenY(model.princess.coorY), standardSize/2.5f, Color.BLUE)
+        if (!model.princess.hasPotion) graphics.drawCircle(
+            mazeXToScreenX(model.princess.coorX),
+            mazeYToScreenY(model.princess.coorY),
+            standardSize / 2.5f,
+            Color.YELLOW
+        )
+        else graphics.drawCircle(
+            mazeXToScreenX(model.princess.coorX),
+            mazeYToScreenY(model.princess.coorY),
+            standardSize / 2.5f,
+            Color.BLUE
+        )
     }
 
     override fun drawMonsters() {
         val arrayColors = arrayOf(Color.CYAN, Color.RED, Color.MAGENTA, Color.WHITE)
-        var i : Int = 0
-        for (monster in model.arrayMonsters){
-            graphics.drawRect(mazeXToScreenX(monster.coorX) - standardSize/2, mazeYToScreenY(monster.coorY) - standardSize/2, standardSize/1.25f, standardSize/1.25f, arrayColors[i])
+        var i: Int = 0
+        for (monster in model.arrayMonsters) {
+            graphics.drawRect(
+                mazeXToScreenX(monster.coorX) - standardSize / 2,
+                mazeYToScreenY(monster.coorY) - standardSize / 2,
+                standardSize / 1.25f,
+                standardSize / 1.25f,
+                arrayColors[i]
+            )
             i++
         }
     }

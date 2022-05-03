@@ -10,7 +10,7 @@ class Controller(private val model: Model, private val view: IMainView): IGameCo
     private val gestureDetector = GestureDetector()
 
     override fun onUpdate(deltaTime: Float, touchEvents: MutableList<TouchHandler.TouchEvent>) {
-        val dTime =/* if(deltaTime>0.5)  0.02f else */deltaTime
+        val dTime =if(deltaTime>0.5)  0.02f else deltaTime
         for (event in touchEvents) {
             if (event.type == TouchHandler.TouchType.TOUCH_DOWN)
                 gestureDetector.onTouchDown(view.normalizeX(event.x), view.normalizeY(event.y))

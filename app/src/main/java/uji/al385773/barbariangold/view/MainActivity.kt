@@ -190,13 +190,15 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
     override fun playPotion() {
         soundPool.play(potionDrinkId, 0.6f, 0.8f, 0, 0, 1f)
     }
+    var idWalkingLoop = 0
 
     override fun playWalk() {
-        //soundPool.play(walkingId, 0.6f, 0.8f, 0, -1, 1f)
+        idWalkingLoop = soundPool.play(walkingId, 0.6f, 0.8f, 0, -1, 1f)
+
     }
 
     override fun stopWalk() {
-        //soundPool.stop(walkingId)
+        soundPool.stop(idWalkingLoop)
     }
 
     override fun deathPlay() {

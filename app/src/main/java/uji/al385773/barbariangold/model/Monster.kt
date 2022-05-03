@@ -23,7 +23,7 @@ class Monster(var maze: Maze, var nMonster: Int) {
         if (newPos != position) {
             if (maze[newPos].type == CellType.WALL) {
                 toCenter()
-                direction = direction.opposite()
+                direction = fixDirection(maze)
 
             } else {
                 position = newPos
@@ -53,20 +53,7 @@ class Monster(var maze: Maze, var nMonster: Int) {
         if (possible.isEmpty()) return direction.opposite()
         return possible.random()
 
-        //Modo 1
-        /*val directionsList = arrayListOf(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT)
 
-        if (maze[position].hasWall(Direction.RIGHT) || direction == Direction.RIGHT.opposite()) //
-            directionsList.removeAt(3)
-        if (maze[position].hasWall(Direction.LEFT) || direction == Direction.LEFT.opposite())
-            directionsList.removeAt(2)
-        if (maze[position].hasWall(Direction.DOWN) || direction == Direction.DOWN.opposite())
-            directionsList.removeAt(1)
-        if (maze[position].hasWall(Direction.UP) || direction == Direction.UP.opposite())
-            directionsList.removeAt(0)
-
-        val randomIndex = Random.nextInt(directionsList.size)
-        return directionsList[randomIndex]*/
     }
 
     private fun toCenter() {

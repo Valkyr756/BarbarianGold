@@ -130,6 +130,7 @@ class Princess(mazeOG: Maze, private val soundPlayer: PrincessSoundPlayer) {
         isDead = true
         deadTime = 1f
         soundPlayer.deathPlay()
+        
     }
 
     fun levelPassedSound() {

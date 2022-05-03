@@ -5,6 +5,8 @@ import java.lang.Math.abs
 class Model(private var soundPlayer: Princess.PrincessSoundPlayer) {
 
     var level = 0
+    var restart = false
+    var isGameOver = false
     var maze: Maze = Levels.all[level]
         private set
     var princess: Princess = Princess(maze, soundPlayer)
@@ -30,21 +32,24 @@ class Model(private var soundPlayer: Princess.PrincessSoundPlayer) {
                     System.out.println("monster killed")
                     monster.reset()
                 } else {
-                    if (princess.lives <= 1) {
-                        System.out.println("game over")
-                        maze.reset()
-                        for (monster in arrayMonsters) {
-                            monster.reset()
-                        }
-                        princess.reset()
-                    } else if (!princess.isDead) {
-                        //a lo mejor se necesita un segundo donde no puedas volver a perder vida
-                        princess.death()
-                        for (monster in arrayMonsters) {
-                            monster.reset()
-                        }
+                    if (princess.lives <= 3) {
+                        //restartGameOver()
+                        isGameOver = true
+                        princess.moving = false
 
+                    } else if (!princess.isDead) {
+
+                        princess.moving = false
+
+                        princess.death()
+
+                        for (monster in arrayMonsters) {
+                            monster.reset()
+                        }
+                        isGameOver = false
                         System.out.println("death, " + princess.lives + " lives left")
+
+
                     }
 
                 }
@@ -78,6 +83,17 @@ class Model(private var soundPlayer: Princess.PrincessSoundPlayer) {
 
     fun changeDirection(direction: Direction) {
         princess.changeDirection(direction)
+    }
+
+    fun restartGameOver(){
+        maze.reset()
+        for (monster in arrayMonsters) {
+            monster.reset()
+        }
+        princess.reset()
+
+        isGameOver= false
+
     }
     /*fun changeDirection(direction: Direction) {
         if(!princess.moving){

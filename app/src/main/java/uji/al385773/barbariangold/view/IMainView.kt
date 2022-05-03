@@ -7,4 +7,7 @@ interface IMainView {
     fun normalizeX(eventX: Int): Float
     fun normalizeY(eventY: Int): Float
     fun standardSizeCalculate()
+    fun drawCoinsCollected()
+    fun drawGameOver()
+    fun changeGameOverState(stateGameOver: Boolean)
 }

@@ -3,6 +3,7 @@ package uji.al385773.barbariangold.view
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Paint
 import android.media.AudioAttributes
 import android.media.SoundPool
 import android.os.Bundle
@@ -24,7 +25,6 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
     private var xOffset = 0f
     private var yOffset = 0f
     private var standardSize = 0f
-
     private var width = 0
     private var height = 0
 
@@ -35,6 +35,8 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
     private var coinTakenId = 0
     private var levelFinishedId = 0
     private var princessDiesId = 0
+
+    public var isGameOverScreen = false
 
     private val model = Model(this)
     private val maze
@@ -92,6 +94,10 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
         drawMaze()
         drawPrincess()
         drawMonsters()
+        drawCoinsCollected()
+        if(isGameOverScreen) {
+            drawGameOver()
+        }
 
         return graphics.frameBuffer
     }
@@ -167,6 +173,26 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
             Color.BLUE
         )
     }
+    override fun drawCoinsCollected(){
+        var coins = controller.getCoins()
+        graphics.setTextSize(60)
+        graphics.setTextColor(Color.WHITE)
+        graphics.setTextAlign(Paint.Align.LEFT)
+        graphics.drawText((width/32).toFloat(),(height/8).toFloat(), coins.toString())
+
+    }
+
+    override fun drawGameOver(){
+        graphics.drawRect((width/2).toFloat() - (width/3), (height/2).toFloat() - height/4 ,(width/1.5).toFloat(), (height/2).toFloat(),Color.BLACK)
+        graphics.setTextSize(60)
+        graphics.setTextAlign(Paint.Align.CENTER)
+        graphics.setTextColor(Color.WHITE)
+        graphics.drawText((width/2).toFloat(), (height/2).toFloat(), "GAME OVER")
+        graphics.setTextSize(40)
+        graphics.setTextColor(Color.CYAN)
+        graphics.drawText((width/2).toFloat(), (height/2).toFloat() + height/8, "Press to start")
+
+    }
 
     override fun drawMonsters() {
         val arrayColors = arrayOf(Color.CYAN, Color.RED, Color.MAGENTA, Color.WHITE)
@@ -182,6 +208,7 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
             i++
         }
     }
+
 
     override fun playCoin() {
         soundPool.play(coinTakenId, 0.6f, 0.8f, 0, 0, 1f)
@@ -207,5 +234,9 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
 
     override fun gameOverPlay() {
         soundPool.play(levelFinishedId, 0.6f, 0.8f, 0, 0, 1f)
+    }
+
+    override fun changeGameOverState(stateGameOver: Boolean) {
+        isGameOverScreen = stateGameOver
     }
 }

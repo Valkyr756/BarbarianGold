@@ -199,8 +199,8 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
         var i: Int = 0
         for (monster in model.arrayMonsters) {
             graphics.drawRect(
-                mazeXToScreenX(monster.coorX) - standardSize / 2,
-                mazeYToScreenY(monster.coorY) - standardSize / 2,
+                mazeXToScreenX(monster.coorX) - standardSize / 2.5f,
+                mazeYToScreenY(monster.coorY) - standardSize / 2.5f,
                 standardSize / 1.25f,
                 standardSize / 1.25f,
                 arrayColors[i]

@@ -95,6 +95,7 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
         drawPrincess()
         drawMonsters()
         drawCoinsCollected()
+        drawLives()
         if(isGameOverScreen) {
             drawGameOver()
         }
@@ -174,12 +175,17 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
         )
     }
     override fun drawCoinsCollected(){
-        var coins = controller.getCoins()
-        graphics.setTextSize(60)
+        val coins = controller.getCoins()
+        graphics.setTextSize(40)
         graphics.setTextColor(Color.WHITE)
         graphics.setTextAlign(Paint.Align.LEFT)
-        graphics.drawText((width/32).toFloat(),(height/8).toFloat(), coins.toString())
+        graphics.drawText((width/32).toFloat(),(height/8).toFloat(), "Coins: $coins")
+    }
 
+    override fun drawLives() {
+        val lives = controller.getLives()
+        graphics.setTextAlign(Paint.Align.LEFT)
+        graphics.drawText((width/1.3).toFloat(),(height/8).toFloat(), "Lives: $lives")
     }
 
     override fun drawGameOver(){

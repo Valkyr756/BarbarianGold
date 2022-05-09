@@ -32,7 +32,7 @@ class Model(private var soundPlayer: Princess.PrincessSoundPlayer) {
                     System.out.println("monster killed")
                     monster.reset()
                 } else {
-                    if (princess.lives <= 3) {
+                    if (princess.lives <= 1) {
                         //restartGameOver()
                         isGameOver = true
                         princess.moving = false

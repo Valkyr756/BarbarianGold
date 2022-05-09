@@ -41,7 +41,11 @@ class Controller(private val model: Model, private val view: IMainView): IGameCo
 
     }
 
-    fun getCoins():Int{
+    fun getCoins(): Int {
         return model.princess.coins
+    }
+
+    fun getLives(): Int {
+        return model.princess.lives
     }
 }

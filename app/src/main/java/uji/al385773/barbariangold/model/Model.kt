@@ -36,6 +36,8 @@ class Model(private var soundPlayer: Princess.PrincessSoundPlayer) {
                         //restartGameOver()
                         isGameOver = true
                         princess.moving = false
+                        princess.lives = 0
+                        princess.soundPlayer.stopWalk()
 
                     } else if (!princess.isDead) {
 

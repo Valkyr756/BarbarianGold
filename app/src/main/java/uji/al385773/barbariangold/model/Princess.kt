@@ -2,7 +2,7 @@ package uji.al385773.barbariangold.model
 
 import kotlin.math.roundToInt
 
-class Princess(mazeOG: Maze, private val soundPlayer: PrincessSoundPlayer) {
+class Princess(mazeOG: Maze, val soundPlayer: PrincessSoundPlayer) {
     interface PrincessSoundPlayer {
         fun playCoin()
         fun playPotion()

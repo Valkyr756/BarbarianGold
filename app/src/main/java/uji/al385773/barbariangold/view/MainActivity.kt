@@ -36,7 +36,7 @@ class MainActivity : GameActivity(), IMainView, Princess.PrincessSoundPlayer {
     private var levelFinishedId = 0
     private var princessDiesId = 0
 
-    public var isGameOverScreen = false
+    var isGameOverScreen = false
 
     private val model = Model(this)
     private val maze

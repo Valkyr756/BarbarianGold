@@ -97,23 +97,4 @@ class Model(private var soundPlayer: Princess.PrincessSoundPlayer) {
         isGameOver= false
 
     }
-    /*fun changeDirection(direction: Direction) {
-        if(!princess.moving){
-            princess.direction = direction
-            princess.moving = true
-        }
-        else{
-            if(direction != princess.direction){
-                if(direction == princess.direction.opposite()){princess.direction = direction}
-                else{
-                    if(!maze[princess.princessPos].hasWall(direction)){
-                        princess.toCenter()
-                        princess.direction = direction
-                    }
-                }
-            }
-        }
-        princess.nextDirection = direction
-
-    }*/
 }
